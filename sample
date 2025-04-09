@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Echo a start message indicating that the script has started
+echo "-------------------"
+echo "Script started."
+echo "-------------------"
+
+# Define the Nginx config path where the server block is located
+NGINX_CONFIG_PATH="/etc/nginx/sites-enabled/default"
+
+# Check if the Nginx configuration file exists
+if [ -f "$NGINX_CONFIG_PATH" ]; then
+    echo "Nginx configuration file exists."
+    echo "-------------------"
+else
+    # If the Nginx config file is not found, print an error and exit
+    echo "Nginx configuration file does not exist!"
+    exit 1
+fi
+
+# Modify Nginx config to allow larger uploads by setting client_max_body_size
+echo "Modifying Nginx configuration to set client_max_body_size to 10M."
+echo "-------------------"
+
+# Add 'client_max_body_size 10M;' to the server block to allow larger file uploads
+# This change allows clients to upload files up to 10MB in size
+sed -i '/server {/a client_max_body_size 10M;' "$NGINX_CONFIG_PATH"
+
+# Check if the modification was successfully made
+if grep -q "client_max_body_size 10M;" "$NGINX_CONFIG_PATH"; then
+    echo "Nginx configuration updated successfully."
+else
+    # If the update failed, print an error and exit
+    echo "Failed to update Nginx configuration."
+    exit 1
+fi
+
+# Print the entire content of the Nginx configuration file after modifications
+echo "Current Nginx configuration (after modification):"
+echo "-------------------"
+cat "$NGINX_CONFIG_PATH"
+echo "-------------------"
+
+# Reload Nginx to apply the configuration changes
+echo "Reloading Nginx to apply changes."
+echo "-------------------"
+nginx -s reload
+
+# Echo a success message indicating Nginx has been reloaded successfully
+echo "-------------------"
+echo "Nginx reloaded successfully."
+echo "-------------------"
