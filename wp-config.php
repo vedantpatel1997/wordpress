@@ -20,6 +20,13 @@
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
+
+
+
+
+//--------------------------------------------------------------------
+// DATABASE IS CONNECTED TO AZURE MYSQL FLEXIBLE SERVER DIRECTLY, WHILE EVEN RUNNING LOCALLY
+//--------------------------------------------------------------------
 define( 'DB_NAME', 'vedant_db' );
 
 /** Database username */
@@ -36,24 +43,48 @@ define( 'DB_CHARSET', 'utf8mb4' );
 
 /** The database collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
+//--------------------------------------------------------------------
+// DATABASE IS CONNECTED TO AZURE MYSQL FLEXIBLE SERVER DIRECTLY, WHILE EVEN RUNNING LOCALLY
+//--------------------------------------------------------------------
 
-// define( 'WP_HOME', 'http://localhost/wordpress' );
-// define( 'WP_SITEURL', 'http://localhost/wordpress' );
 
 
-// To fix mix content and too many redirects error
-if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
-    $_SERVER['HTTPS'] = 'on';
-}
 
-$http_protocol = 'http://';
+//--------------------------------------------------------------------
+// THIS NEEDS TO BE ENABLE WHILE WORKING LOCALLY NOT ON PRODUCTION
+//--------------------------------------------------------------------
+define( 'WP_HOME', 'http://localhost/Vedant-wp' );
+define( 'WP_SITEURL', 'http://localhost/Vedant-wp' );
+//--------------------------------------------------------------------
+// THIS NEEDS TO BE ENABLE WHILE WORKING LOCALLY NOT ON PRODUCTION
+//--------------------------------------------------------------------
 
-if (!preg_match("/^localhost(:[0-9])/", $_SERVER['HTTP_HOST']) && !preg_match("/^127.0.0.1(:[0-9])/", $_SERVER['HTTP_HOST'])) {
-    $http_protocol = 'https://';
-}
 
-define('WP_HOME', $http_protocol . $_SERVER['HTTP_HOST']);
-define('WP_SITEURL', $http_protocol . $_SERVER['HTTP_HOST']);
+
+
+//--------------------------------------------------------------------
+// THIS NEEDS TO BE ENABLE WHILE WORKING ON CLOUD NOT REQUIRED LOCALLY
+//--------------------------------------------------------------------
+
+// // To fix mix content and too many redirects error
+// if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+//     $_SERVER['HTTPS'] = 'on';
+// }
+
+// $http_protocol = 'http://';
+
+// if (!preg_match("/^localhost(:[0-9])/", $_SERVER['HTTP_HOST']) && !preg_match("/^127.0.0.1(:[0-9])/", $_SERVER['HTTP_HOST'])) {
+//     $http_protocol = 'https://';
+// }
+
+// define('WP_HOME', $http_protocol . $_SERVER['HTTP_HOST']);
+// define('WP_SITEURL', $http_protocol . $_SERVER['HTTP_HOST']);
+
+//--------------------------------------------------------------------
+// THIS NEEDS TO BE ENABLE WHILE WORKING ON CLOUD
+//--------------------------------------------------------------------
+
+
 
 /**#@+
  * Authentication unique keys and salts.
@@ -103,10 +134,26 @@ $table_prefix = 'wp_';
  *
  * @link https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/
  */
+
+
+
+
+//--------------------------------------------------------------------
+// THIS NEEDS TO BE ENABLE FOR ADDITIONAL DEBUG LOGGING
+//--------------------------------------------------------------------
 define('WP_DEBUG', true);
 define('WP_DEBUG_LOG', true);
 define('WP_DEBUG_DISPLAY', false);
 @ini_set('display_errors', 0);
+
+// LOGS WILL BE STORED INSIDE WP-CONTENT FOLDER ==>> debug.log
+
+//--------------------------------------------------------------------
+// // THIS NEEDS TO BE ENABLE FOR ADDITIONAL DEBUG LOGGING
+//--------------------------------------------------------------------
+
+
+
 
 /* Add any custom values between this line and the "stop editing" line. */
 
